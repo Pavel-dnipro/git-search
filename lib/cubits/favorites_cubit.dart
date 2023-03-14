@@ -23,20 +23,31 @@ class FavoritesCubit extends Cubit<FavoritesState> {
 
     emit(state.copyWith(
       isLoading: false,
-      favorites: favorites,
+      favorites: [...state.favorites, ...favorites],
     ));
   }
 
   Future<void> addFavorite(Repo item) async {
     emit(
-      state.copyWith(
-        isLoading: true,
-      ),
+      state.copyWith(isLoading: true, favorites: [...state.favorites, item]),
     );
     final favorites = await favoritesRepository.addFavorite(item);
 
     emit(state.copyWith(
       isLoading: false,
+    ));
+  }
+
+  Future<void> removeFavorite(Repo item) async {
+    emit(
+      state.copyWith(isLoading: true),
+    );
+    List<Repo> currentFavorites = [...state.favorites];
+    currentFavorites.remove(item);
+
+    emit(state.copyWith(
+      isLoading: false,
+      favorites: currentFavorites,
     ));
   }
 }

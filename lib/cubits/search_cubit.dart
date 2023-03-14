@@ -26,14 +26,14 @@ class SearchCubit extends Cubit<SearchState> {
 
     final List<Repo> repos = await repository.searchRepos(
       query ?? state.searchQuery,
-      (state.currentPage ?? 0) + 1,
+      state.currentPage,
     );
 
     emit(state.copyWith(
       isLoading: false,
       searchQuery: query,
-      repos: repos,
-      currentPage: (state.currentPage ?? 0) + 2,
+      repos: [...state.repos, ...repos],
+      currentPage: state.currentPage + 2,
     ));
   }
 }
@@ -42,13 +42,13 @@ class SearchCubit extends Cubit<SearchState> {
 class SearchState with _$SearchState {
   const factory SearchState({
     ///
-    List<Repo>? repos,
+    @Default([]) List<Repo> repos,
 
     ///
     String? searchQuery,
 
     ///
-    int? currentPage,
+    @Default(1) int currentPage,
 
     /// Notifies if async operations are being performed.
     @Default(false) bool isLoading,

@@ -1,8 +1,10 @@
 import 'dart:async';
-import 'package:dio/dio.dart';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:gitsearch/models/repo_model.dart';
 import 'package:gitsearch/repositories/repo_repository.dart';
+
+import 'package:http/http.dart' as http;
 
 class RepoRepositoryImpl implements ReposRepository {
   Future<List<Repo>> searchRepos(String? query, int page) async {
@@ -40,40 +42,34 @@ class RepoRepositoryImpl implements ReposRepository {
   }
 }
 
-final Dio _dio = Dio();
 Future<List<Repo>> searchRepositories(Map<String, dynamic> data) async {
   final List<Repo> results = [];
 
   Map<String, String> _headers = <String, String>{
-    'Accept': 'application/vnd.github.v3+json',
-    'Authorization':
-        'token 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',
+    'Accept': 'application/vnd.github+json',
+    'Authorization': 'Bearer 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',
+    'X-GitHub-Api-Version': '2022-11-28',
   };
 
-  final Response response = await _dio.get(
-    'https://api.github.com/search/repositories',
-    options: Options(
-      headers: _headers,
-      validateStatus: (statusCode) {
-        if (statusCode == null) {
-          return false;
-        }
-        if (statusCode == 422) {
-          // your http status code
-          return true;
-        } else {
-          return statusCode >= 200 && statusCode < 300;
-        }
-      },
+  final queryParameters = {
+    'q': data['query'],
+    'page': data['page'].toString(),
+    'per_page': data['perPage'].toString(),
+  };
+
+  final response = await http.get(
+    Uri.https(
+      'api.github.com',
+      '/search/repositories',
+      queryParameters,
     ),
-    queryParameters: {
-      'q': data['query'],
-      'page': data['page'],
-      'per_page': data['perPage'],
-    },
+    headers: _headers,
   );
-  if (response.data['items'] != null) {
-    final List<dynamic> items = response.data['items'];
+
+  Map<String, dynamic> payload = jsonDecode(response.body);
+
+  if (payload['items'] != null) {
+    final List<dynamic> items = payload['items'];
     for (final item in items) {
       results.add(Repo.fromJson(item));
       print(Repo.fromJson(item));

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gitsearch/cubits/favorites_cubit.dart';
 import 'package:gitsearch/cubits/search_cubit.dart';
+import 'package:gitsearch/models/repo_model.dart';
 import 'package:gitsearch/presentation/favorites_screen.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -42,9 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 );
               }),
           title: TextField(
-            autofocus: true,
             focusNode: focusNode,
-            keyboardType: TextInputType.text,
             controller: _searchController,
             decoration: InputDecoration(
               hintText: 'Search',
@@ -71,29 +71,53 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
         body: BlocBuilder<SearchCubit, SearchState>(
           builder: (_, state) {
-            if (state.isLoading)
-              return Center(child: CircularProgressIndicator());
-            return ListView.separated(
-              controller: _scrollController
-                ..addListener(() {
-                  if (_scrollController.offset ==
-                          _scrollController.position.maxScrollExtent &&
-                      !state.isLoading) {
-                    BlocProvider.of<SearchCubit>(context).getSearchResult();
-                  }
-                }),
-              itemBuilder: (_, index) {
-                return ListTile(
-                  title: Text(state.repos?[index].name ?? ''),
-                  subtitle: Text(state.repos?[index].description ?? ''),
-                  leading: CircleAvatar(
-                    child: Icon(Icons.person),
+            return BlocBuilder<FavoritesCubit, FavoritesState>(
+                builder: (_, favoritesState) {
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.separated(
+                      controller: _scrollController
+                        ..addListener(() {
+                          if (_scrollController.offset ==
+                                  _scrollController.position.maxScrollExtent &&
+                              !state.isLoading) {
+                            BlocProvider.of<SearchCubit>(context)
+                                .getSearchResult();
+                          }
+                        }),
+                      itemBuilder: (_, index) {
+                        Repo repo = state.repos[index];
+                        bool isFavorite = favoritesState.favorites
+                            .contains(state.repos[index]);
+                        return ListTile(
+                            title: Text(state.repos[index].name ?? ''),
+                            subtitle:
+                                Text(state.repos[index].description ?? ''),
+                            leading: IconButton(
+                              onPressed: () {
+                                isFavorite
+                                    ? BlocProvider.of<FavoritesCubit>(context)
+                                        .removeFavorite(repo)
+                                    : BlocProvider.of<FavoritesCubit>(context)
+                                        .addFavorite(repo);
+                              },
+                              icon: CircleAvatar(
+                                child: Icon(isFavorite
+                                    ? Icons.star
+                                    : Icons.star_border_outlined),
+                              ),
+                            ));
+                      },
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 20),
+                      itemCount: state.repos.length,
+                    ),
                   ),
-                );
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 20),
-              itemCount: state.repos?.length ?? 0,
-            );
+                  if (state.isLoading) CircularProgressIndicator()
+                ],
+              );
+            });
           },
         ));
   }

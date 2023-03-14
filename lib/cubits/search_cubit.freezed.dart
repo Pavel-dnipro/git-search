@@ -17,13 +17,13 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SearchState {
   ///
-  List<Repo>? get repos => throw _privateConstructorUsedError;
+  List<Repo> get repos => throw _privateConstructorUsedError;
 
   ///
   String? get searchQuery => throw _privateConstructorUsedError;
 
   ///
-  int? get currentPage => throw _privateConstructorUsedError;
+  int get currentPage => throw _privateConstructorUsedError;
 
   /// Notifies if async operations are being performed.
   bool get isLoading => throw _privateConstructorUsedError;
@@ -43,9 +43,9 @@ abstract class $SearchStateCopyWith<$Res> {
       _$SearchStateCopyWithImpl<$Res, SearchState>;
   @useResult
   $Res call(
-      {List<Repo>? repos,
+      {List<Repo> repos,
       String? searchQuery,
-      int? currentPage,
+      int currentPage,
       bool isLoading,
       Exception? exception});
 }
@@ -63,25 +63,25 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? repos = freezed,
+    Object? repos = null,
     Object? searchQuery = freezed,
-    Object? currentPage = freezed,
+    Object? currentPage = null,
     Object? isLoading = null,
     Object? exception = freezed,
   }) {
     return _then(_value.copyWith(
-      repos: freezed == repos
+      repos: null == repos
           ? _value.repos
           : repos // ignore: cast_nullable_to_non_nullable
-              as List<Repo>?,
+              as List<Repo>,
       searchQuery: freezed == searchQuery
           ? _value.searchQuery
           : searchQuery // ignore: cast_nullable_to_non_nullable
               as String?,
-      currentPage: freezed == currentPage
+      currentPage: null == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -103,9 +103,9 @@ abstract class _$$_SearchStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<Repo>? repos,
+      {List<Repo> repos,
       String? searchQuery,
-      int? currentPage,
+      int currentPage,
       bool isLoading,
       Exception? exception});
 }
@@ -121,25 +121,25 @@ class __$$_SearchStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? repos = freezed,
+    Object? repos = null,
     Object? searchQuery = freezed,
-    Object? currentPage = freezed,
+    Object? currentPage = null,
     Object? isLoading = null,
     Object? exception = freezed,
   }) {
     return _then(_$_SearchState(
-      repos: freezed == repos
+      repos: null == repos
           ? _value._repos
           : repos // ignore: cast_nullable_to_non_nullable
-              as List<Repo>?,
+              as List<Repo>,
       searchQuery: freezed == searchQuery
           ? _value.searchQuery
           : searchQuery // ignore: cast_nullable_to_non_nullable
               as String?,
-      currentPage: freezed == currentPage
+      currentPage: null == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -156,24 +156,23 @@ class __$$_SearchStateCopyWithImpl<$Res>
 
 class _$_SearchState with DiagnosticableTreeMixin implements _SearchState {
   const _$_SearchState(
-      {final List<Repo>? repos,
+      {final List<Repo> repos = const [],
       this.searchQuery,
-      this.currentPage,
+      this.currentPage = 1,
       this.isLoading = false,
       this.exception})
       : _repos = repos;
 
   ///
-  final List<Repo>? _repos;
+  final List<Repo> _repos;
 
   ///
   @override
-  List<Repo>? get repos {
-    final value = _repos;
-    if (value == null) return null;
+  @JsonKey()
+  List<Repo> get repos {
     if (_repos is EqualUnmodifiableListView) return _repos;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_repos);
   }
 
   ///
@@ -182,7 +181,8 @@ class _$_SearchState with DiagnosticableTreeMixin implements _SearchState {
 
   ///
   @override
-  final int? currentPage;
+  @JsonKey()
+  final int currentPage;
 
   /// Notifies if async operations are being performed.
   @override
@@ -244,16 +244,16 @@ class _$_SearchState with DiagnosticableTreeMixin implements _SearchState {
 
 abstract class _SearchState implements SearchState {
   const factory _SearchState(
-      {final List<Repo>? repos,
+      {final List<Repo> repos,
       final String? searchQuery,
-      final int? currentPage,
+      final int currentPage,
       final bool isLoading,
       final Exception? exception}) = _$_SearchState;
 
   @override
 
   ///
-  List<Repo>? get repos;
+  List<Repo> get repos;
   @override
 
   ///
@@ -261,7 +261,7 @@ abstract class _SearchState implements SearchState {
   @override
 
   ///
-  int? get currentPage;
+  int get currentPage;
   @override
 
   /// Notifies if async operations are being performed.
