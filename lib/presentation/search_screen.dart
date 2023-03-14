@@ -45,6 +45,12 @@ class _SearchScreenState extends State<SearchScreen> {
               }),
           title: TextField(
             focusNode: focusNode,
+            textInputAction: TextInputAction.search,
+            onSubmitted: (_) {
+              BlocProvider.of<SearchCubit>(context).getSearchResult(
+                query: _searchController.text,
+              );
+            },
             controller: _searchController,
             decoration: InputDecoration(
               hintText: 'Search',

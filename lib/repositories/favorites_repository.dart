@@ -4,6 +4,8 @@ import 'package:gitsearch/models/repo_model.dart';
 
 abstract class FavoritesRepository {
   Future<List<Repo>> getFavorites();
+
   Future<void> addFavorite(Repo item);
+
   Future<void> removeFavorite(Repo item);
 }

@@ -37,20 +37,19 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.5
   flutter_bloc: ^8.1.2
-  bloc: ^8.1.1
-  equatable: ^2.0.5
-  isolate_runner: ^0.0.3
-  rxdart: ^0.27.7
-  isolate: ^2.1.1
+  bloc: ^8.1.1    
   freezed_annotation: ^2.2.0
   json_annotation: ^4.8.0
-  dio: ^5.0.2
+  hive: ^2.2.3
+  hive_flutter: 
+  path_provider:  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   json_serializable: ^6.6.1
   build_runner: ^2.3.3
+  hive_generator:
   freezed: ^2.3.2
 
 # For information on the generic Dart part of this file, see the

@@ -10,6 +10,7 @@ class RepoRepositoryImpl implements ReposRepository {
   Future<List<Repo>> searchRepos(String? query, int page) async {
     final Completer<List<Repo>> completer = Completer();
     final int perPage = 15;
+
     final data = {
       'query': query,
       'page': page,
@@ -42,12 +43,13 @@ class RepoRepositoryImpl implements ReposRepository {
   }
 }
 
+// Simple network client for demo, shoud be moved to separate service
 Future<List<Repo>> searchRepositories(Map<String, dynamic> data) async {
   final List<Repo> results = [];
 
   Map<String, String> _headers = <String, String>{
     'Accept': 'application/vnd.github+json',
-    'Authorization': 'Bearer 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',
+    'Authorization': 'Bearer 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',
     'X-GitHub-Api-Version': '2022-11-28',
   };
 
@@ -72,7 +74,6 @@ Future<List<Repo>> searchRepositories(Map<String, dynamic> data) async {
     final List<dynamic> items = payload['items'];
     for (final item in items) {
       results.add(Repo.fromJson(item));
-      print(Repo.fromJson(item));
     }
   }
 

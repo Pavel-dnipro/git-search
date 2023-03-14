@@ -20,11 +20,17 @@ Repo _$RepoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Repo {
+  @HiveField(0)
   int? get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   String? get name => throw _privateConstructorUsedError;
+  @HiveField(2)
   String? get ownerName => throw _privateConstructorUsedError;
+  @HiveField(3)
   String? get description => throw _privateConstructorUsedError;
+  @HiveField(4)
   int? get stargazersCount => throw _privateConstructorUsedError;
+  @HiveField(5)
   int? get forksCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,12 +44,12 @@ abstract class $RepoCopyWith<$Res> {
       _$RepoCopyWithImpl<$Res, Repo>;
   @useResult
   $Res call(
-      {int? id,
-      String? name,
-      String? ownerName,
-      String? description,
-      int? stargazersCount,
-      int? forksCount});
+      {@HiveField(0) int? id,
+      @HiveField(1) String? name,
+      @HiveField(2) String? ownerName,
+      @HiveField(3) String? description,
+      @HiveField(4) int? stargazersCount,
+      @HiveField(5) int? forksCount});
 }
 
 /// @nodoc
@@ -102,12 +108,12 @@ abstract class _$$_RepoCopyWith<$Res> implements $RepoCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int? id,
-      String? name,
-      String? ownerName,
-      String? description,
-      int? stargazersCount,
-      int? forksCount});
+      {@HiveField(0) int? id,
+      @HiveField(1) String? name,
+      @HiveField(2) String? ownerName,
+      @HiveField(3) String? description,
+      @HiveField(4) int? stargazersCount,
+      @HiveField(5) int? forksCount});
 }
 
 /// @nodoc
@@ -159,26 +165,32 @@ class __$$_RepoCopyWithImpl<$Res> extends _$RepoCopyWithImpl<$Res, _$_Repo>
 @JsonSerializable()
 class _$_Repo with DiagnosticableTreeMixin implements _Repo {
   const _$_Repo(
-      {required this.id,
-      required this.name,
-      required this.ownerName,
-      required this.description,
-      required this.stargazersCount,
-      required this.forksCount});
+      {@HiveField(0) required this.id,
+      @HiveField(1) required this.name,
+      @HiveField(2) required this.ownerName,
+      @HiveField(3) required this.description,
+      @HiveField(4) required this.stargazersCount,
+      @HiveField(5) required this.forksCount});
 
   factory _$_Repo.fromJson(Map<String, dynamic> json) => _$$_RepoFromJson(json);
 
   @override
+  @HiveField(0)
   final int? id;
   @override
+  @HiveField(1)
   final String? name;
   @override
+  @HiveField(2)
   final String? ownerName;
   @override
+  @HiveField(3)
   final String? description;
   @override
+  @HiveField(4)
   final int? stargazersCount;
   @override
+  @HiveField(5)
   final int? forksCount;
 
   @override
@@ -237,26 +249,32 @@ class _$_Repo with DiagnosticableTreeMixin implements _Repo {
 
 abstract class _Repo implements Repo {
   const factory _Repo(
-      {required final int? id,
-      required final String? name,
-      required final String? ownerName,
-      required final String? description,
-      required final int? stargazersCount,
-      required final int? forksCount}) = _$_Repo;
+      {@HiveField(0) required final int? id,
+      @HiveField(1) required final String? name,
+      @HiveField(2) required final String? ownerName,
+      @HiveField(3) required final String? description,
+      @HiveField(4) required final int? stargazersCount,
+      @HiveField(5) required final int? forksCount}) = _$_Repo;
 
   factory _Repo.fromJson(Map<String, dynamic> json) = _$_Repo.fromJson;
 
   @override
+  @HiveField(0)
   int? get id;
   @override
+  @HiveField(1)
   String? get name;
   @override
+  @HiveField(2)
   String? get ownerName;
   @override
+  @HiveField(3)
   String? get description;
   @override
+  @HiveField(4)
   int? get stargazersCount;
   @override
+  @HiveField(5)
   int? get forksCount;
   @override
   @JsonKey(ignore: true)

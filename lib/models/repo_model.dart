@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
 
 part 'repo_model.freezed.dart';
 part 'repo_model.g.dart';
@@ -9,15 +10,16 @@ part 'repo_model.g.dart';
 ///  and number of forks. We've also implemented the [freezed],
 ///  which will allow us to do a lot of cool things.
 
+@HiveType(typeId: 1)
 @freezed
 class Repo with _$Repo {
   const factory Repo({
-    required int? id,
-    required String? name,
-    required String? ownerName,
-    required String? description,
-    required int? stargazersCount,
-    required int? forksCount,
+    @HiveField(0) required int? id,
+    @HiveField(1) required String? name,
+    @HiveField(2) required String? ownerName,
+    @HiveField(3) required String? description,
+    @HiveField(4) required int? stargazersCount,
+    @HiveField(5) required int? forksCount,
   }) = _Repo;
 
   factory Repo.fromJson(Map<String, dynamic> json) => _$RepoFromJson(json);
