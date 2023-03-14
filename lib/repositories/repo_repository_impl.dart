@@ -46,7 +46,8 @@ Future<List<Repo>> searchRepositories(Map<String, dynamic> data) async {
 
   Map<String, String> _headers = <String, String>{
     'Accept': 'application/vnd.github.v3+json',
-    'Authorization': 'token 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',
+    'Authorization':
+        'token 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',
   };
 
   final Response response = await _dio.get(

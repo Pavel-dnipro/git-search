@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gitsearch/cubits/search_cubit.dart';
+import 'package:gitsearch/presentation/favorites_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -31,8 +32,17 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
+          leading: IconButton(
+              icon: Icon(Icons.star_border),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => FavoritesScreen(),
+                  ),
+                );
+              }),
           title: TextField(
+            autofocus: true,
             focusNode: focusNode,
             keyboardType: TextInputType.text,
             controller: _searchController,
@@ -56,7 +66,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   BlocProvider.of<SearchCubit>(context).getSearchResult(
                     query: _searchController.text,
                   );
-                  focusNode.requestFocus();
                 }),
           ],
         ),

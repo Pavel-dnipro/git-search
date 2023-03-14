@@ -1,44 +1,56 @@
-// import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-// class FavoritesCubit extends Cubit<FavoritesEvent, FavoritesState> {
-//   final FavoritesRepository favoritesRepository;
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:gitsearch/models/repo_model.dart';
+import 'package:gitsearch/repositories/favorites_repository.dart';
 
-//   FavoritesBloc({required this.favoritesRepository})
-//       : super(FavoritesLoadingState());
+part 'favorites_cubit.freezed.dart';
 
-//   @override
-//   Stream<FavoritesState> mapEventToState(FavoritesEvent event) async* {
-//     if (event is LoadFavoritesEvent) {
-//       try {
-//         final favorites = await favoritesRepository.getFavorites();
+class FavoritesCubit extends Cubit<FavoritesState> {
+  final FavoritesRepository favoritesRepository;
+  FavoritesCubit(
+    this.favoritesRepository, {
+    FavoritesState favoritesState = const FavoritesState(),
+  }) : super(favoritesState);
 
-//         yield FavoritesLoadedState(favorites: favorites);
-//       } catch (e) {
-//         yield FavoritesErrorState(errorMessage: e.toString());
-//       }
-//     } else if (event is AddFavoriteRepositoryEvent) {
-//       final repository = event.repository;
-//       try {
-//         await favoritesRepository.addFavorite(repository);
+  Future<void> loadFavorites({String? query}) async {
+    emit(
+      state.copyWith(
+        isLoading: true,
+      ),
+    );
+    final favorites = await favoritesRepository.getFavorites();
 
-//         yield FavoritesLoadedState(
-//             favorites: state.favorites + [repository],
-//             addedRepository: repository);
-//       } catch (e) {
-//         yield FavoritesErrorState(errorMessage: e.toString());
-//       }
-//     } else if (event is RemoveFavoriteRepositoryEvent) {
-//       final repository = event.repository;
-//       try {
-//         await favoritesRepository.removeFavorite(repository);
+    emit(state.copyWith(
+      isLoading: false,
+      favorites: favorites,
+    ));
+  }
 
-//         yield FavoritesLoadedState(
-//             favorites:
-//                 state.favorites.where((r) => r.id != repository.id).toList(),
-//             removedRepository: repository);
-//       } catch (e) {
-//         yield FavoritesErrorState(errorMessage: e.toString());
-//       }
-//     }
-//   }
-// }
+  Future<void> addFavorite(Repo item) async {
+    emit(
+      state.copyWith(
+        isLoading: true,
+      ),
+    );
+    final favorites = await favoritesRepository.addFavorite(item);
+
+    emit(state.copyWith(
+      isLoading: false,
+    ));
+  }
+}
+
+@freezed
+class FavoritesState with _$FavoritesState {
+  const factory FavoritesState({
+    ///
+    @Default([]) List<Repo> favorites,
+
+    /// Notifies if async operations are being performed.
+    @Default(false) bool isLoading,
+
+    /// Error that might have occurred during the execution of a task.
+    Exception? exception,
+  }) = _FavoritesState;
+}
